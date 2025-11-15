@@ -99,7 +99,6 @@ class ReportController extends Controller
                     'topic' => $session->topik,
                     'status' => $session->status,
                     'date' => $session->created_at->format('Y-m-d'),
-                    'duration' => $session->duration,
                     'messages_count' => $session->messages->count(),
                 ];
             });
@@ -114,12 +113,11 @@ class ReportController extends Controller
             ->map(function($session) {
                 return [
                     'id' => $session->id,
-                    'counselor' => $session->guru_bk->name,
+                    'counselor' => $session->guru_bk->name ?? 'Not assigned',
                     'type' => $session->jenis_konseling,
                     'topic' => $session->topik,
                     'status' => $session->status,
                     'date' => $session->created_at->format('Y-m-d'),
-                    'follow_up' => $session->follow_up,
                 ];
             });
     }
@@ -134,11 +132,10 @@ class ReportController extends Controller
                 return [
                     'id' => $session->id,
                     'student' => $session->siswa->name,
-                    'counselor' => $session->guru_bk->name,
+                    'counselor' => $session->guru_bk->name ?? 'Not assigned',
                     'topic' => $session->topik,
                     'status' => $session->status,
                     'date' => $session->created_at->format('Y-m-d'),
-                    'outcome' => $session->outcome,
                 ];
             });
     }
@@ -148,8 +145,8 @@ class ReportController extends Controller
         $this->authorize('export-reports');
 
         $type = $request->type;
-        $format = $request->format ?? 'pdf';
-        
+        $format = $request->get('format', 'pdf');
+
         $data = match($type) {
             'overview' => $this->getOverviewStats(),
             'monthly' => $this->getMonthlyStats(),
@@ -165,5 +162,23 @@ class ReportController extends Controller
             'csv' => $this->generateCsvReport($data, $type),
             default => throw new \InvalidArgumentException('Invalid export format'),
         };
+    }
+
+    private function generatePdfReport($data, $type)
+    {
+        // Placeholder for PDF generation
+        return response()->json(['message' => 'PDF export not implemented yet', 'data' => $data]);
+    }
+
+    private function generateExcelReport($data, $type)
+    {
+        // Placeholder for Excel generation
+        return response()->json(['message' => 'Excel export not implemented yet', 'data' => $data]);
+    }
+
+    private function generateCsvReport($data, $type)
+    {
+        // Placeholder for CSV generation
+        return response()->json(['message' => 'CSV export not implemented yet', 'data' => $data]);
     }
 }

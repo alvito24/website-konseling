@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\StudentsRef;
+use App\Models\StudentRef;
 use App\Models\StaffRef;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +31,7 @@ class AdminController extends Controller
                 'nis' => 'required|exists:students_ref,nis'
             ]);
 
-            $student = StudentsRef::where('nis', $request->nis)->first();
+            $student = StudentRef::where('nis', $request->nis)->first();
             $user->update([
                 'is_verified' => true,
                 'ref_id' => $student->id

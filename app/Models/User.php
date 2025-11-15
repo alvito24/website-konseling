@@ -50,4 +50,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'is_verified' => 'boolean',
         ];
     }
+
+    public function counselingSessions()
+    {
+        return $this->hasMany(Konseling::class, 'guru_bk_id');
+    }
+
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
+    }
 }

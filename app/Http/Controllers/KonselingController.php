@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class KonselingController extends Controller
 {
-{
     public function index()
     {
         $user = Auth::user();

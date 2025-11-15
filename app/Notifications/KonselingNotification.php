@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Konseling;
-use App\Models\Konseling;
 
 class KonselingNotification extends Notification implements ShouldQueue
 {
