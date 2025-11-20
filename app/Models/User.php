@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -51,13 +51,33 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function counselingSessions()
+    public function guru()
     {
-        return $this->hasMany(Konseling::class, 'guru_bk_id');
+        return $this->hasOne(Guru::class);
     }
 
-    public function journals()
+    public function siswa()
     {
-        return $this->hasMany(Journal::class);
+        return $this->hasOne(Siswa::class);
+    }
+
+    public function jurnals()
+    {
+        return $this->hasMany(Jurnal::class);
+    }
+
+    public function materi()
+    {
+        return $this->hasMany(Materi::class, 'uploaded_by');
+    }
+
+    public function diskusi()
+    {
+        return $this->hasMany(Diskusi::class, 'created_by');
+    }
+
+    public function forumComments()
+    {
+        return $this->hasMany(ForumComment::class);
     }
 }
